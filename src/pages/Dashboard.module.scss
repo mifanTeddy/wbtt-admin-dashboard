@@ -1,0 +1,62 @@
+.header {
+  background-color: #001529;
+  color: white;
+  padding: 0 20px;
+  font-size: 24px;
+  text-align: center;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #111;
+  }
+}
+
+.ant-layout {
+  background-color: #f0f2f5;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #1e1e1e;
+  }
+}
+
+.ant-table {
+  background-color: #fff;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #2a2a2a;
+  }
+}
+
+.ant-btn {
+  margin-right: 10px;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #005fcc;
+    border-color: #005fcc;
+    color: white;
+  }
+
+  &.ant-btn-primary {
+    @media (prefers-color-scheme: dark) {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+  }
+
+  &.ant-btn-danger {
+    @media (prefers-color-scheme: dark) {
+      background-color: #ff4d4f;
+      border-color: #ff4d4f;
+    }
+  }
+}
+
+.ant-input-number {
+  width: 100px;
+  background-color: #fff;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #3a3a3a;
+    color: white;
+    border-color: #555;
+  }
+}
