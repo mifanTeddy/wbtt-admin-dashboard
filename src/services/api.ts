@@ -54,3 +54,11 @@ export const setEventSort = async (
 ): Promise<void> => {
   await instance.post("/set-sort", { event_id, sort });
 };
+
+// 获取事件详情
+export const fetchEventInfo = async (event_id: number): Promise<AdminEvent> => {
+  const response = await instance.get(`/info`, {
+    params: { event_id },
+  });
+  return response.data.data;
+};
