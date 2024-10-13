@@ -1,9 +1,10 @@
 import { createContext, useState, useContext, ReactNode } from "react";
 import { message } from "antd";
+import { apiLogin } from "../services/api";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (username: string, password: string) => boolean;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -17,8 +18,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 
   // 登录函数
-  const login = (username: string, password: string): boolean => {
-    if (username === "admin" && password === "password") {
+  const login = async (
+    username: string,
+    password: string
+  ): Promise<boolean> => {
+    if (username && password) {
+      await apiLogin({ username, password });
       setIsAuthenticated(true);
       localStorage.setItem("isAuthenticated", "true"); // 保存登录状态到 localStorage
       message.success("Login successful");

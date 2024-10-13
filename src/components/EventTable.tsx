@@ -7,7 +7,7 @@ interface EventTableProps {
   events: AdminEvent[];
   loading: boolean;
   onToggleShow: (event_id: number, isShow: number) => void;
-  onDelete: (event_id: number) => void;
+  //   onDelete: (event_id: number) => void;
   onSortChange: (event_id: number, newSort: number) => void;
 }
 
@@ -15,7 +15,7 @@ const EventTable: React.FC<EventTableProps> = ({
   events,
   loading,
   onToggleShow,
-  onDelete,
+  //   onDelete,
   onSortChange,
 }) => {
   const columns = [
@@ -67,9 +67,9 @@ const EventTable: React.FC<EventTableProps> = ({
           >
             {record.is_show ? "Hide" : "Show"}
           </Button>
-          <Button danger onClick={() => onDelete(record.id)}>
+          {/* <Button danger onClick={() => onDelete(record.id)}>
             Delete
-          </Button>
+          </Button> */}
         </span>
       ),
     },

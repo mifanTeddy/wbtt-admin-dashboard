@@ -6,9 +6,27 @@ const API_BASE_URL = "https://venture.hzchainup.com/v1/event/admin";
 const instance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    Authorization: "GpohjHpJxudTW1WgfK4kgUml35itZaDo5qu39z6",
+    Authorization:
+      localStorage.getItem("token") ||
+      "GpohjHpJxudTW1WgfK4kgUml35itZaDo5qu39z6",
   },
 });
+
+// 登陆
+export const apiLogin = async ({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}): Promise<{ token: string }> => {
+  const response = await instance.post("/login", { username, password });
+  const token = response.data.data.token;
+
+  localStorage.setItem("token", token);
+
+  return { token };
+};
 
 // 获取事件列表
 export const fetchEventList = async (): Promise<AdminEvent[]> => {

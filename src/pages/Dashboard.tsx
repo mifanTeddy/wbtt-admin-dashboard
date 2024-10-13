@@ -3,7 +3,7 @@ import { Layout, Menu, message } from "antd";
 import {
   fetchEventList,
   toggleEventShow,
-  deleteEvent,
+  // deleteEvent,
   setEventSort,
 } from "../services/api";
 
@@ -57,16 +57,16 @@ const Dashboard = () => {
   };
 
   // 删除事件
-  const handleDelete = async (id: number) => {
-    try {
-      await deleteEvent(id);
-      setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
-      message.success("Event deleted");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      message.error("Error deleting event");
-    }
-  };
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await deleteEvent(id);
+  //     setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
+  //     message.success("Event deleted");
+  //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   } catch (error) {
+  //     message.error("Error deleting event");
+  //   }
+  // };
 
   // 修改排序
   const handleSortChange = async (id: number, newSort: number) => {
@@ -104,14 +104,14 @@ const Dashboard = () => {
           >
             Dashboard
           </Menu.Item>
-          <Menu.Item
+          {/* <Menu.Item
             key="2"
             style={{
               color: "#ddd",
             }}
           >
             Other Page
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </Sider>
       <Layout>
@@ -123,7 +123,7 @@ const Dashboard = () => {
             events={events}
             loading={loading}
             onToggleShow={handleToggleShow}
-            onDelete={handleDelete}
+            // onDelete={handleDelete}
             onSortChange={handleSortChange}
           />
         </Content>
