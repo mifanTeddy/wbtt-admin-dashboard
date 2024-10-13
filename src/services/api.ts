@@ -36,15 +36,15 @@ export const fetchEventList = async (): Promise<AdminEvent[]> => {
 
 // 切换显示状态
 export const toggleEventShow = async (
-  id: number,
+  event_id: number,
   isShow: number
 ): Promise<void> => {
-  await instance.post("/set-show", { id, is_show: isShow });
+  await instance.post("/set-show", { event_id, is_show: isShow });
 };
 
 // 删除事件
-export const deleteEvent = async (id: number): Promise<void> => {
-  await instance.post("/delete", { id });
+export const deleteEvent = async (event_id: number): Promise<void> => {
+  await instance.post("/delete", { event_id });
 };
 
 // 设置事件排序
