@@ -9,9 +9,11 @@ const Login = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (auth?.login(username, password)) {
+    const isLogin = await auth?.login(username, password);
+    if (isLogin) {
+      console.log("Login successful");
       navigate("/"); // 登录成功后跳转到主页面
     }
   };
