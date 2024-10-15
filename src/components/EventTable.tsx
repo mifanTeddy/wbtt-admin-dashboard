@@ -9,6 +9,7 @@ interface EventTableProps {
   loading: boolean;
   onToggleShow: (event_id: number, isShow: number) => void;
   onSortChange: (event_id: number, newSort: number) => void;
+  onDelete: (event_id: number) => void;
 }
 
 const EventTable: React.FC<EventTableProps> = ({
@@ -16,6 +17,7 @@ const EventTable: React.FC<EventTableProps> = ({
   loading,
   onToggleShow,
   onSortChange,
+  onDelete,
 }) => {
   const [selectedEvent, setSelectedEvent] = useState<AdminEvent | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -92,6 +94,9 @@ const EventTable: React.FC<EventTableProps> = ({
             style={{ marginRight: 8 }}
           >
             View Details
+          </Button>
+          <Button danger onClick={() => onDelete(record.id)}>
+            Delete
           </Button>
         </span>
       ),
