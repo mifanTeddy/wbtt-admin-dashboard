@@ -64,6 +64,20 @@ const EventTable: React.FC<EventTableProps> = ({
       width: "30%",
     },
     {
+      title: "Icon",
+      dataIndex: "icon_url",
+      key: "icon_url",
+      render: (text: string, record: AdminEvent) => (
+        <a href={text}>
+          <img
+            src={record.icon_url}
+            alt={record.event_title}
+            style={{ width: "50px", height: "50px" }}
+          />
+        </a>
+      ),
+    },
+    {
       title: "Sort Order",
       dataIndex: "sort_order",
       key: "sort_order",
@@ -162,6 +176,15 @@ const EventTable: React.FC<EventTableProps> = ({
                 rel="noopener noreferrer"
               >
                 {selectedEvent.twitter_url}
+              </a>
+            </p>
+            <p>
+              <a href={selectedEvent.icon_url}>
+                <img
+                  src={selectedEvent.icon_url}
+                  alt={selectedEvent.event_title}
+                  style={{ width: "50px", height: "50px" }}
+                />
               </a>
             </p>
             <p>
