@@ -58,6 +58,12 @@ const EventTable: React.FC<EventTableProps> = ({
       ),
     },
     {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      width: "30%",
+    },
+    {
       title: "Sort Order",
       dataIndex: "sort_order",
       key: "sort_order",
@@ -146,6 +152,16 @@ const EventTable: React.FC<EventTableProps> = ({
                 rel="noopener noreferrer"
               >
                 {selectedEvent.web_url}
+              </a>
+            </p>
+            <p>
+              <strong>Twitter URL:</strong>
+              <a
+                href={selectedEvent.twitter_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {selectedEvent.twitter_url}
               </a>
             </p>
             <p>
