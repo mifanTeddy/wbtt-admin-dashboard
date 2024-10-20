@@ -62,3 +62,16 @@ export const fetchEventInfo = async (event_id: number): Promise<AdminEvent> => {
   });
   return response.data.data;
 };
+
+//增加票数功能
+export const addVotes = async ({
+  event_id,
+  votes,
+}: {
+  event_id: number;
+  votes: number;
+}): Promise<void> => {
+  const response = await instance.post("/add-vote", { event_id, votes });
+
+  return response.data.data;
+};

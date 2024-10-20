@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Table, Button, Modal, message } from "antd";
 import { AdminEvent } from "../services/types";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
-import { fetchEventInfo } from "../services/api"; // 引入 fetchEventInfo
+import { fetchEventInfo, addVotes } from "../services/api";
 
 interface EventTableProps {
   events: AdminEvent[];
@@ -34,6 +34,20 @@ const EventTable: React.FC<EventTableProps> = ({
     }
   };
 
+  // 增加票数
+  const handleAddVotes = async (event_id: number, currentVotes: number) => {
+    try {
+      await addVotes({ event_id, votes: currentVotes + 1 });
+      message.success("Votes added successfully");
+
+      // 更新事件列表中的票数
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      message.error("Failed to add votes");
+    }
+  };
+
   // 关闭模态框
   const handleCloseModal = () => {
     setIsModalVisible(false);
@@ -56,6 +70,12 @@ const EventTable: React.FC<EventTableProps> = ({
           {record.votes}
         </span>
       ),
+    },
+    {
+      title: "Votes",
+      dataIndex: "votes",
+      key: "votes",
+      width: "10%",
     },
     {
       title: "Description",
@@ -117,6 +137,12 @@ const EventTable: React.FC<EventTableProps> = ({
           </Button>
           <Button danger onClick={() => onDelete(record.id)}>
             Delete
+          </Button>
+          <Button
+            onClick={() => handleAddVotes(record.id, record.votes)} // 增加票数按钮
+            style={{ marginLeft: 8 }}
+          >
+            Add Vote
           </Button>
         </span>
       ),
