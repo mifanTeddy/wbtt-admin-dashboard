@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Button, Modal, message } from "antd";
+import { Table, Button, Modal, Input, message } from "antd";
 import { AdminEvent } from "../services/types";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import { fetchEventInfo, addVotes } from "../services/api";
@@ -21,6 +21,9 @@ const EventTable: React.FC<EventTableProps> = ({
 }) => {
   const [selectedEvent, setSelectedEvent] = useState<AdminEvent | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [voteModalVisible, setVoteModalVisible] = useState(false); // 控制票数 Modal 的显示
+  const [inputVotes, setInputVotes] = useState<number>(0); // 输入的票数
+  const [currentEventId, setCurrentEventId] = useState<number | null>(null); // 当前事件ID
 
   // 显示详情模态框
   const showEventInfo = async (event_id: number) => {
@@ -34,17 +37,27 @@ const EventTable: React.FC<EventTableProps> = ({
     }
   };
 
-  // 增加票数
-  const handleAddVotes = async (event_id: number, currentVotes: number) => {
-    try {
-      await addVotes({ event_id, votes: currentVotes + 1 });
-      message.success("Votes added successfully");
+  // 显示增加票数的模态框
+  const showVoteModal = (event_id: number) => {
+    setCurrentEventId(event_id); // 记录当前事件 ID
+    setVoteModalVisible(true); // 显示票数输入 Modal
+  };
 
-      // 更新事件列表中的票数
+  // 处理票数提交
+  const handleVoteSubmit = async () => {
+    if (currentEventId !== null) {
+      try {
+        await addVotes({ event_id: currentEventId, votes: inputVotes });
+        message.success("Votes added successfully");
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      message.error("Failed to add votes");
+        // 关闭票数 Modal 并清空输入
+        setVoteModalVisible(false);
+        setInputVotes(0);
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        message.error("Failed to add votes");
+      }
     }
   };
 
@@ -52,6 +65,11 @@ const EventTable: React.FC<EventTableProps> = ({
   const handleCloseModal = () => {
     setIsModalVisible(false);
     setSelectedEvent(null);
+  };
+
+  const handleCloseVoteModal = () => {
+    setVoteModalVisible(false);
+    setInputVotes(0);
   };
 
   const columns = [
@@ -66,8 +84,7 @@ const EventTable: React.FC<EventTableProps> = ({
       key: "rank",
       render: (_text: number, record: AdminEvent) => (
         <span>
-          Rank: {record.rank}, Sort Order: {record.sort_order}, Votes:{" "}
-          {record.votes}
+          Rank: {record.rank}, Sort Order: {record.sort_order}
         </span>
       ),
     },
@@ -139,7 +156,7 @@ const EventTable: React.FC<EventTableProps> = ({
             Delete
           </Button>
           <Button
-            onClick={() => handleAddVotes(record.id, record.votes)} // 增加票数按钮
+            onClick={() => showVoteModal(record.id)} // 显示增加票数的模态框
             style={{ marginLeft: 8 }}
           >
             Add Vote
@@ -223,6 +240,22 @@ const EventTable: React.FC<EventTableProps> = ({
         ) : (
           <p>Loading event details...</p>
         )}
+      </Modal>
+
+      {/* 增加票数模态框 */}
+      <Modal
+        title="Add Votes"
+        visible={voteModalVisible}
+        onCancel={handleCloseVoteModal}
+        onOk={handleVoteSubmit} // 点击确认时提交
+      >
+        <p>Enter the number of votes to add:</p>
+        <Input
+          type="number"
+          value={inputVotes}
+          onChange={(e) => setInputVotes(parseInt(e.target.value, 10))}
+          min={1}
+        />
       </Modal>
     </>
   );
